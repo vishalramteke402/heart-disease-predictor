@@ -34,4 +34,25 @@ exang = st.selectbox("Exercise Induced Angina (exang)", [0, 1])
 oldpeak = st.number_input("ST Depression Induced by Exercise (oldpeak)", min_value=0.0, max_value=10.0, value=1.0, step=0.1)
 slope = st.selectbox("Slope of Peak Exercise ST Segment (slope)", [0, 1, 2])
 ca = st.selectbox("Number of Major Vessels Colored by Fluoroscopy (ca)", [0, 1, 2, 3, 4])
-thal = st.selectbox("Thalasse
+thal = st.selectbox("Thalassemia (thal)", [0, 1, 2, 3])
+
+# -----------------------------
+# Prediction
+# -----------------------------
+if st.button("🔍 Predict"):
+    # Collect all inputs into an array
+    input_data = np.array([[age, sex, cp, trestbps, chol, fbs, restecg,
+                            thalach, exang, oldpeak, slope, ca, thal]])
+    
+    # Make prediction
+    prediction = model.predict(input_data)[0]
+    
+    # Display result
+    st.subheader("Prediction Result:")
+    if prediction == 1:
+        st.error("⚠️ The model predicts that this person **may have heart disease.**")
+    else:
+        st.success("✅ The model predicts that this person **is unlikely to have heart disease.**")
+
+st.markdown("---")
+st.caption("Made with ❤️ using Streamlit")
